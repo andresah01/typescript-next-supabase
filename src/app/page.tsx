@@ -8,7 +8,7 @@ export default function Home() {
   const router = useRouter()
   return (
     <main className={styles.main}>
-      <h1 className={styles.title}> Usuarios JSONPlaceholder </h1>
+      <h1 className={styles.title}> Usuarios </h1>
       <button onClick={() => router.push('/user')}> + Nuevo usuario</button>
       <UserList />
     </main>

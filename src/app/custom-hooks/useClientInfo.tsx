@@ -24,20 +24,17 @@ export function useClientInfo() {
 
     const insertInfoApi = async () => {
         const { id, ...client } = clientInfo
-        const { data, error } = await supabase.from("tbl_clients").insert(client)
-        console.log({ data, error })
+        const { data, error } = await supabase.from("tbl_clients").insert(client) 
     }
 
     const updateInfoApi = async () => {
         const { id, ...client } = clientInfo
         const { data, error } = await supabase.from("tbl_clients").update(client).eq("id", id)
-        console.log({ data, error })
     }
 
     const deleteInfoApi = async () => {
         const { id } = clientInfo
         const { data, error } = await supabase.from("tbl_clients").delete().eq("id", id)
-        console.log({ data, error })
     }
 
     const handleClientInfo = (id: number) => {
