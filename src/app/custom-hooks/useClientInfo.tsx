@@ -1,4 +1,4 @@
-import { Client } from "../types"
+import { Client } from '../types';
 import { useState } from "react"
 import { supabase } from "../supabase/supabaseClient"
 
@@ -15,26 +15,32 @@ export function useClientInfo() {
         document_type: 0
     })
 
+    const [infoMessage, setInfoMessage] = useState("")
+
     const selectClientInfoApi = async (id: number) => {
         const { data, error } = await supabase.rpc("select_one", {
             client_id: id
         })
         data.map((client: Client) => setClientInfo(client))
+        data.length === 0 ? setInfoMessage("No se encontro informacion del cliente solicitado") : setInfoMessage("")
     }
 
     const insertInfoApi = async () => {
         const { id, ...client } = clientInfo
-        const { data, error } = await supabase.from("tbl_clients").insert(client) 
+        const { data, error } = await supabase.from("tbl_clients").insert(client)
+        error ? setInfoMessage(error.message) : setInfoMessage(`Se ha ingresado exitosamente el cliente ${clientInfo.name} ${clientInfo.lastname}`)
     }
 
     const updateInfoApi = async () => {
         const { id, ...client } = clientInfo
         const { data, error } = await supabase.from("tbl_clients").update(client).eq("id", id)
+        error ? setInfoMessage(error.message) : setInfoMessage(`Se ha actualizado exitosamente el cliente ${clientInfo.name} ${clientInfo.lastname}`)
     }
 
     const deleteInfoApi = async () => {
         const { id } = clientInfo
         const { data, error } = await supabase.from("tbl_clients").delete().eq("id", id)
+        error ? setInfoMessage(error.message) : setInfoMessage(`Se ha eliminado exitosamente el cliente ${clientInfo.name} ${clientInfo.lastname}`)
     }
 
     const handleClientInfo = (id: number) => {
@@ -64,6 +70,7 @@ export function useClientInfo() {
 
     return {
         clientInfo,
+        infoMessage,
         handleClientInfo,
         handleChangeInfo,
         handleSubmit,

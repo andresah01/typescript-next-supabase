@@ -56,7 +56,7 @@ export type UsersAPI = Array<{
 }>
 
 export interface Client {
-    id: number
+    readonly id: number
     name: string
     lastname: string
     phone: string
@@ -65,6 +65,6 @@ export interface Client {
 }
 
 export interface DocumentTypes {
-    id: number
+    readonly id: number
     description: string
 }
