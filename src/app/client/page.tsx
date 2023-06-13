@@ -1,3 +1,9 @@
-import ClientForm from "../components/ClientForm";
+import FormNewClient from "../components/FormNewClient";
 
-export default ClientForm;
+export default function NewClient() {
+    return (
+        <section>
+            <FormNewClient />
+        </section>
+    )
+}

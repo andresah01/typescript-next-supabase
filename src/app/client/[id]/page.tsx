@@ -1,3 +1,10 @@
-import ClientForm from "../../components/ClientForm";
+import FormEditClient from "@/app/components/FormEditClient";
 
-export default ClientForm;
+
+export default function ClientInfo() {
+    return (
+        <section>
+            <FormEditClient />
+        </section>
+    )
+}
