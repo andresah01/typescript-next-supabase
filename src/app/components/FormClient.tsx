@@ -11,12 +11,12 @@ export default function FormClient() {
 
     const { clientInfo, infoMessage, handleClientInfo, handleChangeInfo, handleSubmit, handleUpdate, handleDelete } = useClientInfo()
 
-    const { documentTypes, fetchDocumentTypes } = useDocumentTypes()
+    const { documentTypes, getAllDocuments } = useDocumentTypes()
 
     const params = useParams()
 
     useEffect(() => {
-        fetchDocumentTypes()
+        getAllDocuments()
         const { id } = params
         typeof id === "string" && handleClientInfo(Number(id))
     }, [])
@@ -41,7 +41,7 @@ export default function FormClient() {
                     <select name="document_type" onChange={handleChangeInfo} value={clientInfo?.document_type}>
                         <option value={0}> Seleccione el tipo de documento </option>
                         {
-                            documentTypes.map(documentType => (
+                            documentTypes?.map(documentType => (
                                 <option key={documentType.id} value={documentType.id}>{documentType.description}</option>
                             ))
                         }

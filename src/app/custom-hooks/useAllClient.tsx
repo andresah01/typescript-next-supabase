@@ -9,7 +9,7 @@ export function useAllClient() {
     const [clientsData, setClientsData] = useState<Array<clientDataState['client']>>([])
 
     const getAllClients = async () => {
-        const data = await fetchAllClients()
+        const data: Client[] = await fetchAllClients()
         setClientsData(data)
     }
 

@@ -1,6 +1,7 @@
 import { Client } from '../types';
 import { useState } from "react"
 import { supabase } from "../supabase/supabaseClient"
+import { PostgrestError } from '@supabase/supabase-js';
 
 interface clientDataState {
     client: Client
@@ -18,11 +19,11 @@ export function useClientInfo() {
     const [infoMessage, setInfoMessage] = useState("")
 
     const selectClientInfoApi = async (id: number) => {
-        const { data, error } = await supabase.rpc("select_one", {
+        const { data, error }: { data: Client[] | null, error: PostgrestError | null } = await supabase.rpc("select_one", {
             client_id: id
         })
-        data.map((client: Client) => setClientInfo(client))
-        data.length === 0 ? setInfoMessage("No se encontro informacion del cliente solicitado") : setInfoMessage("")
+        data?.map((client: Client) => setClientInfo(client))
+        data?.length === 0 ? setInfoMessage("No se encontro informacion del cliente solicitado") : setInfoMessage("")
     }
 
     const insertInfoApi = async () => {
@@ -65,7 +66,6 @@ export function useClientInfo() {
     const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         confirm("¿Desea borrar?") && deleteInfoApi()
-
     }
 
     return {
