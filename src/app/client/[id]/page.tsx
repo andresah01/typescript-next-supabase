@@ -1,10 +1,10 @@
-import FormEditClient from "@/app/components/FormEditClient";
+import FormClient from "../../components/FormClient";
 
 
 export default function ClientInfo() {
     return (
         <section>
-            <FormEditClient />
+            <FormClient />
         </section>
     )
 }

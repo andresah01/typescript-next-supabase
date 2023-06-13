@@ -1,9 +1,9 @@
-import FormNewClient from "../components/FormNewClient";
+import FormClient from "../components/FormClient";
 
 export default function NewClient() {
     return (
         <section>
-            <FormNewClient />
+            <FormClient />
         </section>
     )
 }
