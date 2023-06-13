@@ -9,7 +9,7 @@ export default function UserForm() {
 
     const { clientInfo, handleClientInfo, handleChangeInfo, handleSubmit, handleUpdate, handleDelete } = useClientInfo()
 
-    const { documentTypes, handleDocumentTypes } = useDocumentTypes()
+    const { documentTypes, fetchDocumentTypes } = useDocumentTypes()
 
     const params = useParams()
 
@@ -17,7 +17,7 @@ export default function UserForm() {
 
     useEffect(() => {
         const { id } = params
-        handleDocumentTypes()
+        fetchDocumentTypes()
         typeof id === "string" && handleClientInfo(Number(id))
     }, [])
 

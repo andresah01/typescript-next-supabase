@@ -9,13 +9,13 @@ export default function UserList() {
 
     const { clientsData, getAllClients } = useAllClient()
 
-    const { documentTypes, handleDocumentTypes } = useDocumentTypes()
+    const { fetchDocumentTypes, getDocumentDescription } = useDocumentTypes()
 
     const router = useRouter()
 
     useEffect(() => {
         getAllClients()
-        handleDocumentTypes()
+        fetchDocumentTypes()
     }, [])
 
     return (
@@ -29,7 +29,7 @@ export default function UserList() {
                                 <h2>{`${client.name} ${client.lastname}`}</h2>
                             </div>
                             <div className={styles.info}>
-                                <p>Tipo de documento: {documentTypes?.find(document => document.id === client.document_type)?.description}</p>
+                                <p>Tipo de documento: {getDocumentDescription(client.document_type)}</p>
                                 <p>Numero de documento: {client.document}</p>
                                 <p>Telefono: {client.phone}</p>
                             </div>
