@@ -18,6 +18,16 @@ export function useClientInfo() {
     const [infoMessage, setInfoMessage] = useState("")
 
     const selectClientInfoApi = async (id: number) => {
+        // let { data, error } = await supabase
+        //     .from('tbl_clients')
+        //     .select(`
+        //     *,
+        //     tbl_document_type(
+        //         description
+        //     )`)
+
+        // console.log({ data, error })
+
         const { data, error } = await supabase.rpc("select_one", {
             client_id: id
         })
