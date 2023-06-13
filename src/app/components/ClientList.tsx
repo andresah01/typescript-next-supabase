@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useAllClient } from '../custom-hooks/useAllClient'
 import { useDocumentTypes } from '../custom-hooks/useDocumentTypes'
 
-export default function UserList() {
+export default function ClientList() {
 
     const { clientsData, getAllClients } = useAllClient()
 
@@ -19,7 +19,7 @@ export default function UserList() {
     }, [])
 
     return (
-        <main>
+        <section>
             <ul className={styles.list}>
                 {
                     clientsData.map(client => (
@@ -38,6 +38,6 @@ export default function UserList() {
                     ))
                 }
             </ul>
-        </main>
+        </section>
     )
 }

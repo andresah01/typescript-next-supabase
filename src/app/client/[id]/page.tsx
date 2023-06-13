@@ -1,3 +1,3 @@
-import UserForm from "../../components/UserForm";
+import ClientForm from "../../components/ClientForm";
 
-export default UserForm;
+export default ClientForm;

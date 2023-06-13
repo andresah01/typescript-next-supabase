@@ -13,7 +13,7 @@ export function useAllClient() {
         setClientsData(data)
     }
 
-    const fetchAllClients = async (): Promise<Client[]> => {
+    const fetchAllClients = async () => {
         const { data, error } = await supabase.rpc("select_all")
         if (error) console.log(error)
         return data

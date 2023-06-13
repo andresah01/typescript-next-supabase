@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation'
 import { useClientInfo } from '../custom-hooks/useClientInfo'
 import { useDocumentTypes } from '../custom-hooks/useDocumentTypes'
 
-export default function UserForm() {
+export default function ClientForm() {
 
     const { clientInfo, infoMessage, handleClientInfo, handleChangeInfo, handleSubmit, handleUpdate, handleDelete } = useClientInfo()
 
@@ -23,7 +23,7 @@ export default function UserForm() {
 
 
     return (
-        <main>
+        <section>
             <div>
                 <h2 className={styles.title}> Ingrese los datos del nuevo usuario</h2>
                 <button onClick={() => router.push(`/`)}>Inicio</button>
@@ -67,6 +67,6 @@ export default function UserForm() {
                     </div>
                 </form>
             </div>
-        </main>
+        </section>
     )
 }
