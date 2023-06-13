@@ -7,7 +7,7 @@ import { useDocumentTypes } from '../custom-hooks/useDocumentTypes'
 
 export default function UserForm() {
 
-    const { clientInfo, handleClientInfo, handleChangeInfo, handleSubmit, handleUpdate, handleDelete } = useClientInfo()
+    const { clientInfo, infoMessage, handleClientInfo, handleChangeInfo, handleSubmit, handleUpdate, handleDelete } = useClientInfo()
 
     const { documentTypes, fetchDocumentTypes } = useDocumentTypes()
 
@@ -27,6 +27,7 @@ export default function UserForm() {
             <div>
                 <h2 className={styles.title}> Ingrese los datos del nuevo usuario</h2>
                 <button onClick={() => router.push(`/`)}>Inicio</button>
+                {infoMessage !== "" && <h2 className={styles.title}>{infoMessage}</h2>}
                 <form>
                     <div className={styles.formGroup}>
                         <label htmlFor="name"> Nombre </label>

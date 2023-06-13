@@ -5,6 +5,7 @@ import { DocumentTypes } from '../types';
 interface clientDocumentState {
     documentTypes: DocumentTypes
 }
+
 export function useDocumentTypes() {
     const [documentTypes, setDocumentTypes] = useState<Array<clientDocumentState['documentTypes']>>([])
 
