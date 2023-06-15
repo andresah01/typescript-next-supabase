@@ -18,14 +18,13 @@ export default function FormClient() {
     useEffect(() => {
         getAllDocuments()
         const { id } = params
-        typeof id === "string" && handleClientInfo(Number(id))
+        typeof id === "string" && handleClientInfo(id)
     }, [])
-
 
     return (
         <div>
             <h2 className={styles.title}> Ingrese los datos del nuevo usuario</h2>
-            <ButtonRouter route="/" info="Inicio" />
+            <ButtonRouter route="/" message="Inicio" />
             {infoMessage !== "" && <InfoMessage message={infoMessage} />}
             <form>
                 <div className={styles.formGroup}>
@@ -57,7 +56,7 @@ export default function FormClient() {
                 </div>
                 <div className={styles.formGroupButton}>
                     {
-                        clientInfo?.id === 0 ?
+                        clientInfo?.id === '' ?
                             <div>
                                 <button onClick={handleSubmit}> Ingresar </button>
                             </div> :

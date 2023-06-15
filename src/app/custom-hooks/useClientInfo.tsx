@@ -8,7 +8,7 @@ interface clientDataState {
 }
 export function useClientInfo() {
     const [clientInfo, setClientInfo] = useState<clientDataState['client']>({
-        id: 0,
+        id: '',
         name: '',
         lastname: '',
         phone: '',
@@ -18,7 +18,7 @@ export function useClientInfo() {
 
     const [infoMessage, setInfoMessage] = useState("")
 
-    const selectClientInfoApi = async (id: number) => {
+    const selectClientInfoApi = async (id: string) => {
         const { data, error }: { data: Client[] | null, error: PostgrestError | null } = await supabase.rpc("select_one", {
             client_id: id
         })
@@ -44,7 +44,7 @@ export function useClientInfo() {
         error ? setInfoMessage(error.message) : setInfoMessage(`Se ha eliminado exitosamente el cliente ${clientInfo.name} ${clientInfo.lastname}`)
     }
 
-    const handleClientInfo = (id: number) => {
+    const handleClientInfo = (id: string) => {
         selectClientInfoApi(id)
     }
 

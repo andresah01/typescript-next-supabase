@@ -1,5 +1,5 @@
 export interface Client {
-    readonly id: number
+    readonly id: string
     name: string
     lastname: string
     phone: string

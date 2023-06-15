@@ -1,41 +1,43 @@
-"use client"
 import Image from 'next/image'
 import styles from '../page.module.css'
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAllClient } from '../custom-hooks/useAllClient'
 import { useDocumentTypes } from '../custom-hooks/useDocumentTypes'
+import { supabase } from '../supabase/supabaseClient'
+import { Client } from '../types'
+import ButtonRouter from './ButtonRouter'
+import ClientCard from './ClientCard'
 
-export default function ClientList() {
+const getAllClients = async () => {
+    const response = await fetch("https://vjhdrslenbwlgpmqpwcb.supabase.co/rest/v1/rpc/select_all", {
+        headers: {
+            "Content-Type": "application/json",
+            "apikey": process.env.NEXT_PUBLIC_SUPABASE_KEY || "",
+            "Authorization": `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_KEY}`
+        },
+        cache: "no-store"
+    }).then(response => response.json())
+    return response
+}
 
-    const { clientsData, getAllClients } = useAllClient()
+export default async function ClientList() {
 
-    const { getAllDocuments, getDocumentDescription } = useDocumentTypes()
+    const clientsData: Client[] = await getAllClients()
 
-    const router = useRouter()
+    // const { getAllDocuments, getDocumentDescription } = useDocumentTypes()
 
-    useEffect(() => {
-        getAllClients()
-        getAllDocuments()
-    }, [])
+    // useEffect(() => {
+    //     getAllClients()
+    //     getAllDocuments()
+    // }, [])
 
     return (
         <ul className={styles.list}>
             {
-                clientsData.map(client => (
-                    <li key={client.id} className={styles.card}>
-                        <Image className={styles.image} src={`https://i.pravatar.cc/150?img=${client.id}`} alt={client.name} width={100} height={100} />
-                        <div className={styles.name}>
-                            <h2>{`${client.name} ${client.lastname}`}</h2>
-                        </div>
-                        <div className={styles.info}>
-                            <p>Tipo de documento: {getDocumentDescription(client.document_type)}</p>
-                            <p>Numero de documento: {client.document}</p>
-                            <p>Telefono: {client.phone}</p>
-                        </div>
-                        <button onClick={() => router.push(`/client/${client.id}`)}>Ver mas...</button>
-                    </li>
-                ))
+                Array.isArray(clientsData) ? clientsData.map(client => (
+                    <ClientCard key={client.id} ClientCard={client} />
+                )) : <p className={styles.title}> No hay datos </p>
             }
         </ul>
     )
