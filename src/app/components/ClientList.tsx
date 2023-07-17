@@ -1,44 +1,46 @@
-import Image from 'next/image'
+"use client"
 import styles from '../page.module.css'
 import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 import { useAllClient } from '../custom-hooks/useAllClient'
 import { useDocumentTypes } from '../custom-hooks/useDocumentTypes'
-import { supabase } from '../supabase/supabaseClient'
-import { Client } from '../types'
-import ButtonRouter from './ButtonRouter'
+
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+
+//theme
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+
+//core
+import "primereact/resources/primereact.min.css";
+
 import ClientCard from './ClientCard'
+import ButtonActions from './ButtonActions'
+export default function ClientList() {
 
-const getAllClients = async () => {
-    const response = await fetch("https://vjhdrslenbwlgpmqpwcb.supabase.co/rest/v1/rpc/select_all", {
-        headers: {
-            "Content-Type": "application/json",
-            "apikey": process.env.NEXT_PUBLIC_SUPABASE_KEY || "",
-            "Authorization": `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_KEY}`
-        },
-        cache: "no-store"
-    }).then(response => response.json())
-    return response
-}
+    const { getAllDocuments, getDocumentDescription } = useDocumentTypes()
+    const { clientsData, getAllClients } = useAllClient()
 
-export default async function ClientList() {
+    useEffect(() => {
+        getAllClients()
+        getAllDocuments()
+    }, [])
 
-    const clientsData: Client[] = await getAllClients()
-
-    // const { getAllDocuments, getDocumentDescription } = useDocumentTypes()
-
-    // useEffect(() => {
-    //     getAllClients()
-    //     getAllDocuments()
-    // }, [])
 
     return (
-        <ul className={styles.list}>
-            {
-                Array.isArray(clientsData) ? clientsData.map(client => (
-                    <ClientCard key={client.id} ClientCard={client} />
-                )) : <p className={styles.title}> No hay datos </p>
-            }
-        </ul>
+        // <ul className={styles.list}>
+        //     {
+        //         Array.isArray(clientsData) ? clientsData.map(client => (
+        //             <ClientCard key={client.id} ClientCard={client} />
+        //         )) : <p className={styles.title}> No hay datos </p>
+        //     }
+        // </ul>
+        <div>
+            <DataTable value={clientsData} showGridlines tableStyle={{ minWidth: '50rem' }} >
+                <Column field='name' header="Name" />
+                <Column field='lastname' header="Lastname" />
+                <Column field='document' header="Document" />
+                <Column header="Actions" body={ButtonActions} />
+            </DataTable>
+        </div>
     )
 }

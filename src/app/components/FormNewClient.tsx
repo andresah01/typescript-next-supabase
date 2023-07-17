@@ -4,41 +4,35 @@ import { useEffect } from 'react'
 import { useClientInfo } from '../custom-hooks/useClientInfo'
 import { useDocumentTypes } from '../custom-hooks/useDocumentTypes'
 import ButtonRouter from './ButtonRouter'
-import InfoMessage from './InfoMessage'
 
-interface Props {
-    id?: string
-}
+export default function FormNewClient() {
 
-export default function FormClient({ id }: Props) {
 
-    const { clientInfo, infoMessage, handleClientInfo, handleChangeInfo, handleSubmit, handleUpdate, handleDelete } = useClientInfo()
+    const { newClient, handleChangeNewInfo, handleSubmit } = useClientInfo()
 
     const { documentTypes, getAllDocuments } = useDocumentTypes()
 
     useEffect(() => {
         getAllDocuments()
-        console.log(typeof id)
-        typeof id === "string" && handleClientInfo(id)
     }, [])
 
     return (
         <div>
             <h2 className={styles.title}> Ingrese los datos del nuevo usuario</h2>
             {/* <ButtonRouter route="/" message="Inicio" /> */}
-            {infoMessage !== "" && <InfoMessage message={infoMessage} />}
+            {/* {infoMessage !== "" && <InfoMessage message={infoMessage} />} */}
             <form>
                 <div className={styles.formGroup}>
                     <label> Nombre </label>
-                    <input type="text" name="name" placeholder="Nombre" onChange={handleChangeInfo} value={clientInfo?.name} />
+                    <input type="text" name="name" placeholder="Nombre" onChange={handleChangeNewInfo} value={newClient?.name} />
                 </div>
                 <div className={styles.formGroup}>
                     <label> Apellidos </label>
-                    <input type="text" name="lastname" placeholder="Apellidos" onChange={handleChangeInfo} value={clientInfo?.lastname} />
+                    <input type="text" name="lastname" placeholder="Apellidos" onChange={handleChangeNewInfo} value={newClient?.lastname} />
                 </div>
                 <div className={styles.formGroup}>
                     <label> Tipo de documento </label>
-                    <select name="document_type" onChange={handleChangeInfo} value={clientInfo?.document_type}>
+                    <select name="document_type" onChange={handleChangeNewInfo} value={newClient?.document_type}>
                         <option value={0}> Seleccione el tipo de documento </option>
                         {
                             documentTypes?.map(documentType => (
@@ -49,23 +43,16 @@ export default function FormClient({ id }: Props) {
                 </div>
                 <div className={styles.formGroup}>
                     <label> Documento </label>
-                    <input type="text" name="document" placeholder="Numero de documento" onChange={handleChangeInfo} value={clientInfo?.document} />
+                    <input type="text" name="document" placeholder="Numero de documento" onChange={handleChangeNewInfo} value={newClient?.document} />
                 </div>
                 <div className={styles.formGroup}>
                     <label> Numero de telefono </label>
-                    <input type="text" name="phone" placeholder="Numero telefonico" onChange={handleChangeInfo} value={clientInfo?.phone} />
+                    <input type="text" name="phone" placeholder="Numero telefonico" onChange={handleChangeNewInfo} value={newClient?.phone} />
                 </div>
                 <div className={styles.formGroupButton}>
-                    {
-                        clientInfo?.id === '' ?
-                            <div>
-                                <button onClick={handleSubmit}> Ingresar </button>
-                            </div> :
-                            <div>
-                                <button onClick={handleUpdate}> Actualizar</button>
-                                <button onClick={handleDelete}> Borrar</button>
-                            </div>
-                    }
+                    <div>
+                        <button onClick={handleSubmit}> Ingresar </button>
+                    </div>
                 </div>
             </form>
         </div>

@@ -1,10 +1,15 @@
+"use client"
 import { Inter, Roboto } from 'next/font/google'
+import TabContextProvider from './context/TabContext'
+import { Provider } from "react-redux"
 
 const inter = Inter({ subsets: ['latin'] })
 const roboto = Roboto({ weight: ['300', '400'], subsets: ['latin'] })
 
 import '../app/page.css'
 import styles from './page.module.css'
+import store from './redux/store'
+
 
 export const metadata = {
   title: 'Learning Next App',
@@ -12,14 +17,19 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+
   return (
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
-      <body className={roboto.className}>
+      <body className={inter.className}>
         <main className={styles.main}>
-          {children}
+          <Provider store={store}>
+            <TabContextProvider>
+              {children}
+            </TabContextProvider>
+          </Provider>
         </main>
       </body>
     </html>
